@@ -1,0 +1,35 @@
+[
+    {
+        "id": "493948ca-4760-4000-9310-306575d4cd17",
+        "title": "Alfajor Havanna Chocolate",
+        "description": "Caja de 6 aljajores Havanna de chocolate",
+        "price": 1500,
+        "thumbnail": [],
+        "code": "ALF001",
+        "stock": 30,
+        "status": true,
+        "category": "Alfajores"
+    },
+    {
+        "id": "6b3a9e7d-23ae-4d37-ae1b-b1fdf087dfbe",
+        "title": "Alfajor Havanna Mixto",
+        "description": "Caja de 6 aljajores Havanna de chocolate y merengue",
+        "price": 1400,
+        "thumbnail": [],
+        "code": "ALF002",
+        "stock": 40,
+        "status": true,
+        "category": "Alfajores"
+    },
+    {
+        "id": "60d534ca-04c9-44c8-ba2d-ecca6956eb57",
+        "title": "Alfajor Havanna Merengue",
+        "description": "Caja de 6 aljajores Havanna de merengue",
+        "price": 1300,
+        "thumbnail": [],
+        "code": "ALF003",
+        "stock": 50,
+        "status": true,
+        "category": "Alfajores"
+    }
+]
