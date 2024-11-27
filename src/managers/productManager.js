@@ -60,18 +60,26 @@ export class ProductManager {
 
     async updateProduct(id, data) {
         await this.getProductById(id);
-
         const index = this.products.findIndex((product) => product.id === id);
+        const product = await this.getProductById(id);
+
+        //Valido que los campos existan
+        const validKeys = Object.keys(product); 
+        const invalidKeys = Object.keys(data).filter((key) => !validKeys.includes(key));
+
+        if (invalidKeys.length > 0) {
+        throw new Error(`Los siguientes campos no son validos: ${invalidKeys.join(", ")}`);
+        }
 
         this.products[index] = {
-            ...this.products[index],
-            ...data,
+                ...this.products[index],
+                ...data,
         };
 
         await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2));
 
         return this.products[index];
-    }
+}
 
     async deleteProduct(id) {
         await this.getProductById(id);
