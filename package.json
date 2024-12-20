@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1",
+    "mongoose": "^8.9.1",
+    "mongoose-paginate-v2": "^1.8.5",
     "uuid": "^11.0.3"
   }
 }
