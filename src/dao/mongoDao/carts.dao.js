@@ -2,50 +2,45 @@ import { cartModel } from "../models/cart.model.js";
 
 class CartDao {
     async getAll() {
-        try {
-            return await cartModel.find();
-        } catch (error) {
-            console.error("Error al obtener todos los carritos:", error.message);
-            throw error;
-        }
+        return await cartModel.find();
     }
 
     async getById(id) {
-        try {
-            // Incluye .populate en la consulta de Mongoose
-            return await cartModel.findById(id).populate("products.product");
-        } catch (error) {
-            console.error(`Error al obtener el carrito con ID ${id}:`, error.message);
-            throw error;
-        }
+        return await cartModel.findById(id);
     }
 
     async create(data) {
-        try {
-            return await cartModel.create(data);
-        } catch (error) {
-            console.error("Error al crear el carrito:", error.message);
-            throw error;
-        }
+        return await cartModel.create(data);
     }
 
     async update(id, data) {
-        try {
-            return await cartModel.findByIdAndUpdate(id, data, { new: true });
-        } catch (error) {
-            console.error(`Error al actualizar el carrito con ID ${id}:`, error.message);
-            throw error;
-        }
+        return await cartModel.findByIdAndUpdate(id, data, { new: true });
     }
 
     async delete(id) {
-        try {
-            return await cartModel.findByIdAndDelete(id);
-        } catch (error) {
-            console.error(`Error al eliminar el carrito con ID ${id}:`, error.message);
-            throw error;
-        }
+        return await cartModel.findByIdAndDelete(id);
     }
+
+    async deleteProductInCart(cid, pid) {
+        const cart = await cartModel.findById(cid);
+    
+        if (!cart) {
+            throw new Error("Cart not found");
+        }
+    
+        const productIndex = cart.products.findIndex((product) => product.product._id.toString() === pid);
+    
+        if (productIndex === -1) {
+            throw new Error("Product not found in cart");
+        }
+    
+        cart.products.splice(productIndex, 1);
+    
+        const updatedCart = await cartModel.findByIdAndUpdate(cid, { products: cart.products }, { new: true });
+    
+        return updatedCart;
+    }    
+    
 }
 
 export const cartDao = new CartDao();
