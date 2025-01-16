@@ -22,25 +22,23 @@ class CartDao {
     }
 
     async deleteProductInCart(cid, pid) {
-        const cart = await cartModel.findById(cid);
-    
-        if (!cart) {
-            throw new Error("Cart not found");
-        }
-    
-        const productIndex = cart.products.findIndex((product) => product.product._id.toString() === pid);
-    
-        if (productIndex === -1) {
-            throw new Error("Product not found in cart");
-        }
-    
-        cart.products.splice(productIndex, 1);
-    
-        const updatedCart = await cartModel.findByIdAndUpdate(cid, { products: cart.products }, { new: true });
-    
-        return updatedCart;
-    }    
-    
+        const cart = await cartModel.findById(cid)
+        const productFilter = cart.products.filter(product => product.product != pid)
+
+        return await cartModel.findByIdAndUpdate(cid, { products: productFilter }, { new: true });
+    }
+
+    async updateProductInCart(cid, pid, quantity) {
+        const cart = await cartModel.findById(cid)
+        const product = cart.products.find(product => product.product === pid)
+        product.quantity = quantity
+
+        return await cartModel.findByIdAndUpdate(cid, { products: cart.products }, { new: true });
+    }
+
+    async deleteProductsInCart(cid) {
+        return await cartModel.findByIdAndUpdate(cid, { products: [] }, { new: true });
+    }
 }
 
 export const cartDao = new CartDao();
