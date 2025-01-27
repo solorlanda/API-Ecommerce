@@ -8,9 +8,9 @@ import cookieParser from "cookie-parser";
 import MongoStore from "connect-mongo";
 import passport from "passport";
 import { initializePassport } from "./config/passport.config.js";
+import { JWT_SECRET } from "./utils/jwt.js";
 
 const app = express();
-const SECRET = "clavesecreta";
 
 connectMongoDB();
 const port = 8080;
@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
     session({
-        secret: SECRET,
+        secret: JWT_SECRET,
         store: MongoStore.create({
             mongoUrl,
             ttl: 15,
